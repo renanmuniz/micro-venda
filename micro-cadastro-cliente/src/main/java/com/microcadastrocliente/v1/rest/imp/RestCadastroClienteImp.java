@@ -2,6 +2,7 @@ package com.microcadastrocliente.v1.rest.imp;
 
 import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
 import com.microcadastrocliente.v1.hexagono.porta.contrato.PortaCadastroCliente;
+import com.microcadastrocliente.v1.rest.RestVersion;
 import com.microcadastrocliente.v1.rest.contrato.RestCadastroCliente;
 import com.microcadastrocliente.v1.rest.fabrica.FabricaDTO;
 import com.microcadastrocliente.v1.rest.fabrica.FabricaDominio;
@@ -19,7 +20,7 @@ import javax.validation.Valid;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping(RestVersion.VERSAO+"cliente")
 public class RestCadastroClienteImp implements RestCadastroCliente {
 
     PortaCadastroCliente portaCadastroCliente;
