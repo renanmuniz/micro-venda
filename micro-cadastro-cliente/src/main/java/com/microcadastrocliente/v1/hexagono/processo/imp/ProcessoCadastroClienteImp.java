@@ -3,11 +3,11 @@ package com.microcadastrocliente.v1.hexagono.processo.imp;
 import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
 import com.microcadastrocliente.v1.hexagono.processo.contrato.ProcessoCadastroCliente;
 import com.microcadastrocliente.v1.hexagono.servicos.repositorio.jpa.RepositorioCadastroCliente;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class ProcessoCadastroClienteImp implements ProcessoCadastroCliente {
 
     RepositorioCadastroCliente repositorioCadastroCliente;
