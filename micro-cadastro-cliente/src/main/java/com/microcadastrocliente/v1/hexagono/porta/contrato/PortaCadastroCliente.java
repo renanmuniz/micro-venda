@@ -1,6 +1,7 @@
 package com.microcadastrocliente.v1.hexagono.porta.contrato;
 
 import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
+import com.microcadastrocliente.v1.hexagono.exceptions.ClienteNaoEncontradoException;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface PortaCadastroCliente {
 
     Cliente alterar(Cliente cliente);
 
-    Cliente buscar(Long id);
+    Cliente buscar(Long id) throws ClienteNaoEncontradoException;
 
     List<Cliente> listar();
 

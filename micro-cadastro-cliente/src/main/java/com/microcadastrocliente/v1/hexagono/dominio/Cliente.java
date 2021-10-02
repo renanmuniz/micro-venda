@@ -1,7 +1,9 @@
 package com.microcadastrocliente.v1.hexagono.dominio;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -25,7 +27,7 @@ public class Cliente {
 
     @NotNull
     @NotEmpty
-    @Size(max = 256, message = "Tamanho máximo de 256 caracteres excedidos para campo Endereco")
+    @Size(max = 120, message = "Tamanho máximo de 256 caracteres excedidos para campo Endereco")
     String endereco;
 
     @NotNull
@@ -98,6 +100,38 @@ public class Cliente {
         return email;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
+    }
+
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     /**
      * Executa validação dos campos.
      */
@@ -151,13 +185,13 @@ public class Cliente {
         }
         String nDigVerific = cpfString.substring(cpfString.length() - 2, cpfString.length());
         nDigResult = String.valueOf(digito1) + String.valueOf(digito2);
-        if (!nDigVerific.equals(nDigResult)){
+        if (!nDigVerific.equals(nDigResult)) {
             throw new javax.validation.ValidationException("Cpf inválido.");
         }
     }
 
     private void validarCnpj() {
-        if(this.cnpj.toString().length()<14) {
+        if (this.cnpj.toString().length() < 14) {
             this.cnpj = ("00000000000000" + this.cnpj).substring(this.cnpj.toString().length());
         }
         String cnpjString = this.cnpj.toString();
@@ -189,7 +223,7 @@ public class Cliente {
         }
         dig = 11 - (soma % 11);
         cnpjCalc += (dig == 10 || dig == 11) ? "0" : Integer.toString(dig);
-        if(!cnpjString.equals(cnpjCalc)) {
+        if (!cnpjString.equals(cnpjCalc)) {
             throw new javax.validation.ValidationException("Cnpj inválido.");
         }
     }
@@ -208,7 +242,7 @@ public class Cliente {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(email);
-        if(!matcher.matches()) {
+        if (!matcher.matches()) {
             throw new javax.validation.ValidationException("Email inválido.");
         }
     }
