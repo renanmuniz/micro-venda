@@ -1,6 +1,7 @@
 package com.microcadastrocliente.v1.hexagono.porta.imp;
 
 import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
+import com.microcadastrocliente.v1.hexagono.exceptions.ClienteNaoEncontradoException;
 import com.microcadastrocliente.v1.hexagono.porta.contrato.PortaCadastroCliente;
 import com.microcadastrocliente.v1.hexagono.processo.contrato.ProcessoCadastroCliente;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,6 @@ public class PortaCadastroClienteImp implements PortaCadastroCliente {
 
     @Override
     public Cliente cadastrar(Cliente cliente) {
-        System.out.println("PortaCadastroCliente: " + cliente.toString());
         return processoCadastroCliente.cadastrar(cliente);
     }
 
@@ -28,8 +28,8 @@ public class PortaCadastroClienteImp implements PortaCadastroCliente {
     }
 
     @Override
-    public Cliente buscar(Long id) {
-        return null;
+    public Cliente buscar(Long id) throws ClienteNaoEncontradoException {
+        return processoCadastroCliente.buscar(id);
     }
 
     @Override

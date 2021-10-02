@@ -1,11 +1,14 @@
 package com.microcadastrocliente.v1.hexagono.processo.imp;
 
 import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
+import com.microcadastrocliente.v1.hexagono.exceptions.ClienteNaoEncontradoException;
 import com.microcadastrocliente.v1.hexagono.processo.contrato.ProcessoCadastroCliente;
 import com.microcadastrocliente.v1.hexagono.servicos.repositorio.jpa.RepositorioCadastroCliente;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProcessoCadastroClienteImp implements ProcessoCadastroCliente {
@@ -27,8 +30,12 @@ public class ProcessoCadastroClienteImp implements ProcessoCadastroCliente {
     }
 
     @Override
-    public Cliente buscar(Long id) {
-        return null;
+    public Cliente buscar(Long id) throws ClienteNaoEncontradoException {
+        Optional<Cliente> cliente = repositorioCadastroCliente.findById(id);
+        if(cliente.isPresent()) {
+            return cliente.get();
+        }
+        throw new ClienteNaoEncontradoException();
     }
 
     @Override

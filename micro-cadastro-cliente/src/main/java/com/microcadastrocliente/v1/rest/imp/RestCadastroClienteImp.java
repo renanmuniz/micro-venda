@@ -1,6 +1,7 @@
 package com.microcadastrocliente.v1.rest.imp;
 
 import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
+import com.microcadastrocliente.v1.hexagono.exceptions.ClienteNaoEncontradoException;
 import com.microcadastrocliente.v1.hexagono.porta.contrato.PortaCadastroCliente;
 import com.microcadastrocliente.v1.rest.RestVersion;
 import com.microcadastrocliente.v1.rest.contrato.RestCadastroCliente;
@@ -9,15 +10,13 @@ import com.microcadastrocliente.v1.rest.fabrica.FabricaDominio;
 import com.microcadastrocliente.v1.rest.form.ClienteForm;
 import com.microcadastrocliente.v1.rest.to.ClienteDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(RestVersion.VERSAO+"cliente")
@@ -36,5 +35,13 @@ public class RestCadastroClienteImp implements RestCadastroCliente {
         Cliente cliente = portaCadastroCliente.cadastrar(FabricaDominio.fabricarCliente(form));
         URI uri = uriBuilder.path("/cliente/{id}").buildAndExpand(cliente.getId()).toUri();
         return ResponseEntity.created(uri).body(FabricaDTO.fabricarCliente(cliente));
+    }
+
+    @GetMapping("/{id}")
+    @Override
+    public ResponseEntity<ClienteDTO> buscar(@PathVariable Long id) throws ClienteNaoEncontradoException {
+        Cliente cliente = portaCadastroCliente.buscar(id);
+        return ResponseEntity.ok(FabricaDTO.fabricarCliente(cliente));
+
     }
 }
