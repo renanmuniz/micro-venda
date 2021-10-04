@@ -230,7 +230,7 @@ public class Cliente {
 
 
     private void validarTelefone() {
-        Pattern pattern = Pattern.compile("[0-9]{11}");
+        Pattern pattern = Pattern.compile("[0-9]{10,11}");
         Matcher matcher = pattern.matcher(this.telefone);
         if (!matcher.matches()) {
             throw new javax.validation.ValidationException(
