@@ -7,7 +7,7 @@ import javax.validation.ValidationException;
 
 public class TesteCliente {
 
-    Cliente fabricarClienteValido() {
+    public static Cliente fabricarClienteValido() {
         return new Cliente(
                 "Renan Teste",
                 "13869871075",
