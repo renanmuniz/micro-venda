@@ -1,5 +1,8 @@
 package com.microcadastrocliente.v1.rest.to;
 
+import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
+import com.microcadastrocliente.v1.rest.fabrica.FabricaDTO;
+
 public class ClienteDTO {
     Long id;
     String nome;
@@ -21,6 +24,18 @@ public class ClienteDTO {
         this.estado = estado;
         this.telefone = telefone;
         this.email = email;
+    }
+
+    public ClienteDTO(Cliente cliente) {
+        this.id = cliente.getId();
+        this.nome = cliente.getNome();
+        this.cpf = (cliente.getCpf() != null) ? FabricaDTO.formatarCpf(cliente.getCpf()) : null;
+        this.cnpj = (cliente.getCnpj() != null) ? FabricaDTO.formatarCnpj(cliente.getCnpj()) : null;
+        this.endereco = cliente.getEndereco();
+        this.cidade = cliente.getCidade();
+        this.estado = cliente.getEstado();
+        this.telefone = cliente.getTelefone();
+        this.email = cliente.getEmail();
     }
 
     public Long getId() {

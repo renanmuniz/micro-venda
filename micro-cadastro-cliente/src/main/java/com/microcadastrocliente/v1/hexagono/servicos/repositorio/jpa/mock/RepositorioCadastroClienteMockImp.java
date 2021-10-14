@@ -2,14 +2,14 @@ package com.microcadastrocliente.v1.hexagono.servicos.repositorio.jpa.mock;
 
 import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
 import com.microcadastrocliente.v1.hexagono.servicos.repositorio.jpa.RepositorioCadastroCliente;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 public class RepositorioCadastroClienteMockImp implements RepositorioCadastroCliente {
@@ -104,12 +104,29 @@ public class RepositorioCadastroClienteMockImp implements RepositorioCadastroCli
 
     @Override
     public Page<Cliente> findAll(Pageable pageable) {
-        return null;
+        System.out.println("RepositorioCadastroClienteMockImp -> listar todos." + pageable);
+        List<Cliente> lista = new ArrayList<>();
+        for(long i=0;i<10;i++) {
+            Cliente cliente = new Cliente(
+                    i,
+                    "Cliente Mock Teste " + i,
+                    "13869871075",
+                    null,
+                    "Rua Teste 123",
+                    "Londrina",
+                    "PR",
+                    "43912345678",
+                    "renan@gmail.com"
+            );
+            lista.add(cliente);
+            System.out.println(cliente);
+        }
+        return new PageImpl<>(lista);
     }
 
     @Override
     public <S extends Cliente> S save(S entity) {
-        System.out.println("RepositorioCadastroClienteMockImp -> cadastrar cliente." + entity);
+        System.out.println("RepositorioCadastroClienteMockImp -> cadastrar/alterar cliente." + entity);
         return null;
     }
 
@@ -129,8 +146,8 @@ public class RepositorioCadastroClienteMockImp implements RepositorioCadastroCli
     }
 
     @Override
-    public void delete(Cliente entity) {
-
+    public void delete(Cliente cliente) {
+        System.out.println("RepositorioCadastroClienteMockImp -> deletar cliente." + cliente);
     }
 
     @Override

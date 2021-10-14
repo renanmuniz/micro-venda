@@ -4,11 +4,10 @@ import com.microcadastrocliente.v1.hexagono.dominio.Cliente;
 import com.microcadastrocliente.v1.hexagono.exceptions.ClienteNaoEncontradoException;
 import com.microcadastrocliente.v1.hexagono.processo.contrato.ProcessoCadastroCliente;
 import com.microcadastrocliente.v1.hexagono.servicos.repositorio.jpa.RepositorioCadastroCliente;
-import com.microcadastrocliente.v1.hexagono.servicos.repositorio.jpa.mock.RepositorioCadastroClienteMockImp;
-import net.bytebuddy.implementation.bytecode.Throw;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -20,7 +19,9 @@ public class ProcessoCadastroClienteImp implements ProcessoCadastroCliente {
         this.repositorioCadastroCliente = repositorioCadastroCliente;
     }
 
-    /** Para desenvolvimento com o repositorio mockado: **/
+    /**
+     * Para desenvolvimento com o repositorio mockado:
+     **/
 //    public ProcessoCadastroClienteImp(RepositorioCadastroClienteMockImp repositorioCadastroCliente) {
 //        this.repositorioCadastroCliente = repositorioCadastroCliente;
 //    }
@@ -32,26 +33,31 @@ public class ProcessoCadastroClienteImp implements ProcessoCadastroCliente {
     }
 
     @Override
-    public Cliente alterar(Cliente cliente) {
-        return null;
+    public Cliente alterar(Cliente cliente) throws ClienteNaoEncontradoException {
+        Optional<Cliente> clienteRep = repositorioCadastroCliente.findById(cliente.getId());
+        if (clienteRep.isPresent()) {
+            cliente.validar();
+            return repositorioCadastroCliente.save(cliente);
+        }
+        throw new ClienteNaoEncontradoException();
     }
 
     @Override
     public Cliente buscar(Long id) throws ClienteNaoEncontradoException {
         Optional<Cliente> cliente = repositorioCadastroCliente.findById(id);
-        if(cliente.isPresent()) {
+        if (cliente.isPresent()) {
             return cliente.get();
         }
-        throw new ClienteNaoEncontradoException("Cliente não encontrado.");
+        throw new ClienteNaoEncontradoException();
     }
 
     @Override
-    public List<Cliente> listar() {
-        return null;
+    public Page<Cliente> listar(Pageable pageable) {
+        return repositorioCadastroCliente.findAll(pageable);
     }
 
     @Override
-    public void excluir(Long id) {
-
+    public void excluir(Cliente cliente) {
+        repositorioCadastroCliente.delete(cliente);
     }
 }

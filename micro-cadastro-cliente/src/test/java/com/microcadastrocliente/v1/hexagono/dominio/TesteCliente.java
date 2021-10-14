@@ -300,7 +300,7 @@ public class TesteCliente {
     }
 
     @Test
-    public void testeRegraCpfCnpjPrrenchidosSimultaneamente() {
+    public void testeRegraCpfCnpjPreenchidosSimultaneamente() {
         try {
             Cliente cliente = fabricarClienteValido();
             cliente.setCnpj("16233322000110");
