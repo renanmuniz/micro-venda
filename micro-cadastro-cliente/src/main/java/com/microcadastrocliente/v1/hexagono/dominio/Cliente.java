@@ -64,6 +64,18 @@ public class Cliente {
         validar();
     }
 
+    public Cliente(Long id, String nome, String cpf, String cnpj, String endereco, String cidade, String estado, String telefone, String email) {
+        this.id = id;
+        this.nome = nome;
+        this.cpf = cpf;
+        this.cnpj = cnpj;
+        this.endereco = endereco;
+        this.cidade = cidade;
+        this.estado = estado;
+        this.telefone = telefone;
+        this.email = email;
+    }
+
     public Long getId() {
         return id;
     }

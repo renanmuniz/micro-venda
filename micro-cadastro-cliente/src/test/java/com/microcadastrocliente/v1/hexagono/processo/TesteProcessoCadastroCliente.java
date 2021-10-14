@@ -7,6 +7,10 @@ import com.microcadastrocliente.v1.hexagono.processo.imp.ProcessoCadastroCliente
 import com.microcadastrocliente.v1.hexagono.servicos.repositorio.jpa.mock.RepositorioCadastroClienteMockImp;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.validation.ValidationException;
 
@@ -55,5 +59,71 @@ public class TesteProcessoCadastroCliente {
         }
     }
 
+    @Test
+    public void testeExcluirSucesso() {
+        try {
+            Cliente cliente = TesteCliente.fabricarClienteValido();
+            processo.excluir(cliente);
+        } catch (Exception e) {
+            Assertions.fail("Não deveria dar exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void testeListarTodos() {
+        Pageable pageable = new Pageable() {
+            @Override
+            public int getPageNumber() {
+                return 0;
+            }
+
+            @Override
+            public int getPageSize() {
+                return 0;
+            }
+
+            @Override
+            public long getOffset() {
+                return 0;
+            }
+
+            @Override
+            public Sort getSort() {
+                return null;
+            }
+
+            @Override
+            public Pageable next() {
+                return null;
+            }
+
+            @Override
+            public Pageable previousOrFirst() {
+                return null;
+            }
+
+            @Override
+            public Pageable first() {
+                return null;
+            }
+
+            @Override
+            public Pageable withPage(int pageNumber) {
+                return null;
+            }
+
+            @Override
+            public boolean hasPrevious() {
+                return false;
+            }
+        };
+        try {
+            Page<Cliente> page;
+            page = processo.listar(pageable);
+            Assertions.assertEquals(10, page.getTotalElements());
+        } catch (Exception e) {
+            Assertions.fail("Deveria retornar uma lista de 10 registros do mock: " + e.getMessage());
+        }
+    }
 
 }
